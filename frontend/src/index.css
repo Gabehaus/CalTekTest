@@ -1,0 +1,251 @@
+main {
+  min-height: 80vh;
+}
+
+.header1 {
+  background: red;
+}
+
+h3 {
+  padding: 1rem 0;
+}
+
+h1 {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+}
+
+h2 {
+  font-size: 1.4rem;
+  padding: 0.5rem 0;
+}
+
+.rating span {
+  margin: 0.1rem;
+}
+
+/* carousel */
+.carousel-item-next#prod,
+.carousel-item-prev#prod,
+.carousel-item.active#prod {
+  display: flex;
+}
+.carousel-caption#prod {
+  position: absolute;
+  top: 0;
+}
+
+.carousel-caption h2#prod {
+  color: black;
+}
+
+.carousel img#prod {
+  height: 25vh;
+  padding: 30px;
+  margin: 40px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.carousel a#prod {
+  margin: 0 auto;
+}
+
+.jumbotron {
+  background: white;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.circle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  min-height: 15vh;
+  max-width: 15vh;
+  background: #2ce692;
+  flex-shrink: 0;
+  border: solid 5px black;
+}
+
+.center {
+  text-align: center;
+  margin: auto;
+}
+
+.servBorder {
+  border: solid 5px black;
+}
+
+.borderBottom {
+  border-style: none none solid none;
+
+  border-color: black;
+}
+
+.borderTop {
+}
+
+.job {
+  padding: 0.7rem;
+  padding-top: 0.9rem;
+  background: #2ce692;
+  margin-top: -1px;
+  margin-bottom: -1px;
+  margin-right: -1px;
+  margin-left: -1px;
+}
+
+.job > h4 {
+  text-align: center;
+}
+
+.card-title {
+  min-height: 3rem;
+}
+
+@media (max-width: 3000px) {
+  .main {
+    margin-top: 13vh;
+  }
+
+  .mainHeading {
+    font-size: 4vw;
+  }
+
+  .servicesHeading {
+    font-size: 3vw;
+  }
+
+  .testiPhoto {
+    margin: auto;
+    position: relative;
+    width: 20vw;
+    height: 20vw;
+    background: black;
+
+    overflow: hidden;
+    border: solid 7px black;
+  }
+
+  .carousel img#prod2 {
+    height: 200px;
+    padding: 30px;
+    margin: 40px;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 70px;
+  }
+
+  .homeCarousel {
+    max-width: 60v;
+
+    border: solid 8px black;
+    margin: auto;
+    background: #2ce692;
+  }
+
+  .homeShopButton {
+    margin-left: 50%;
+    transform: translateX(-50%);
+    background: black;
+    border: solid 4px black;
+    color: #2ce692;
+    font-size: 20px;
+  }
+
+  .fa-wifi,
+  .fa-screwdriver,
+  .fa-drafting-compass {
+    font-size: 4vw;
+  }
+}
+@media (max-width: 1100px) {
+  .main {
+    margin-top: 10vh;
+  }
+
+  .mainHeading {
+    font-size: 7vw;
+  }
+
+  .servicesHeading {
+    font-size: 6vw;
+  }
+
+  .testiPhoto {
+    width: 35vw;
+    height: 35vw;
+  }
+
+  .homeCarousel {
+    min-height: 70vw;
+  }
+
+  .carousel img#prod2 {
+    margin-top: 100px;
+    height: 300px;
+  }
+
+  .fa-wifi,
+  .fa-screwdriver,
+  .fa-drafting-compass {
+    font-size: 8vw;
+  }
+}
+
+@media (max-width: 900px) {
+  .carousel-caption h2#prod {
+    font-size: 2.5vw;
+  }
+
+  .carousel img#prod2 {
+    margin-top: 70px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .main {
+    margin-top: 14vh;
+  }
+  .mainHeading {
+    font-size: 8vw;
+  }
+
+  .servicesHeading {
+    font-size: 8vw;
+  }
+
+  .testiPhoto {
+    width: 55vw;
+    height: 55vw;
+  }
+
+  .homeShopButton {
+    font-size: 13px;
+  }
+
+  .fa-wifi,
+  .fa-screwdriver,
+  .fa-drafting-compass {
+    font-size: 12vw;
+  }
+
+  .carousel img#prod2 {
+    margin-top: 70px;
+    height: 190px;
+  }
+}
+@media (max-width: 380px) and (min-height: 800px) {
+}
+@media (max-width: 325px) {
+  .main {
+    margin-top: 17vh;
+  }
+}
