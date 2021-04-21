@@ -5,7 +5,7 @@ import "aos/dist/aos.css"
 
 const Services = () => {
   return (
-    <div className='jumbotron'>
+    <div className='jumbotron' id='services'>
       <h1
         className='servicesHeading'
         data-aos='zoom-in'

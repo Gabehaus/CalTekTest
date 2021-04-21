@@ -32,7 +32,7 @@ export const listProducts = (
     dispatch({ type: PRODUCT_LIST_REQUEST })
 
     const { data } = await axios.get(
-      `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+      `https://caltekshopbackend1.herokuapp.com/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
     )
 
     dispatch({
@@ -54,7 +54,9 @@ export const listProductDetails = id => async dispatch => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST })
 
-    const { data } = await axios.get(`/api/products/${id}`)
+    const { data } = await axios.get(
+      `https://caltekshopbackend1.herokuapp.com/api/products/${id}`
+    )
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
@@ -87,7 +89,10 @@ export const deleteProduct = id => async (dispatch, getState) => {
       }
     }
 
-    await axios.delete(`/api/products/${id}`, config)
+    await axios.delete(
+      `https://caltekshopbackend1.herokuapp.com/api/products/${id}`,
+      config
+    )
 
     dispatch({
       type: PRODUCT_DELETE_SUCCESS
@@ -123,7 +128,11 @@ export const createProduct = () => async (dispatch, getState) => {
       }
     }
 
-    const { data } = await axios.post(`/api/products`, {}, config)
+    const { data } = await axios.post(
+      `https://caltekshopbackend1.herokuapp.com/api/products`,
+      {},
+      config
+    )
     // passes an empty object as an argument because this is a post request but no data is sent
 
     dispatch({
@@ -163,7 +172,7 @@ export const updateProduct = product => async (dispatch, getState) => {
     }
 
     const { data } = await axios.put(
-      `/api/products/${product._id}`,
+      `https://caltekshopbackend1.herokuapp.com/api/products/${product._id}`,
       product,
       config
     )
@@ -208,7 +217,11 @@ export const createProductReview = (productId, review) => async (
       }
     }
 
-    await axios.post(`/api/products/${productId}/reviews`, review, config)
+    await axios.post(
+      `https://caltekshopbackend1.herokuapp.com/api/products/${productId}/reviews`,
+      review,
+      config
+    )
 
     dispatch({
       type: PRODUCT_CREATE_REVIEW_SUCCESS
@@ -232,7 +245,9 @@ export const listTopProducts = () => async dispatch => {
   try {
     dispatch({ type: PRODUCT_TOP_REQUEST })
 
-    const { data } = await axios.get(`/api/products/top`)
+    const { data } = await axios.get(
+      `https://caltekshopbackend1.herokuapp.com/api/products/top`
+    )
 
     dispatch({
       type: PRODUCT_TOP_SUCCESS,

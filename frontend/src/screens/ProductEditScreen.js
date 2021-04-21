@@ -66,10 +66,14 @@ const ProductEditScreen = ({ match, history }) => {
         }
       }
 
-      const { data } = await axios.post("/api/upload", formData, config)
+      const { data } = await axios.post(
+        "https://caltekshopbackend1.herokuapp.com/api/uploadImage",
+        formData
+      )
 
       setImage(data)
       setUploading(false)
+      console.log("formData", formData)
     } catch (error) {
       console.error(error)
       setUploading(false)
@@ -105,7 +109,7 @@ const ProductEditScreen = ({ match, history }) => {
         {loading ? (
           <Loader />
         ) : error ? (
-          <Message variant='danger'>{error}</Message>
+          <Message variant='danger '>{error}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId='name'>

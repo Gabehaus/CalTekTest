@@ -22,7 +22,9 @@ export const listProjects = (pageNumber = "") => async dispatch => {
   try {
     dispatch({ type: PROJECT_LIST_REQUEST })
 
-    const { data } = await axios.get(`/api/projects?pageNumber=${pageNumber}`)
+    const { data } = await axios.get(
+      `https://caltekshopbackend1.herokuapp.com/api/projects?pageNumber=${pageNumber}`
+    )
 
     dispatch({
       type: PROJECT_LIST_SUCCESS,
@@ -43,7 +45,9 @@ export const listProjectDetails = id => async dispatch => {
   try {
     dispatch({ type: PROJECT_DETAILS_REQUEST })
 
-    const { data } = await axios.get(`/api/projects/${id}`)
+    const { data } = await axios.get(
+      `https://caltekshopbackend1.herokuapp.com/api/projects/${id}`
+    )
 
     dispatch({
       type: PROJECT_DETAILS_SUCCESS,
@@ -76,7 +80,10 @@ export const deleteProject = id => async (dispatch, getState) => {
       }
     }
 
-    await axios.delete(`/api/projects/${id}`, config)
+    await axios.delete(
+      `https://caltekshopbackend1.herokuapp.com/api/projects/${id}`,
+      config
+    )
 
     dispatch({
       type: PROJECT_DELETE_SUCCESS
@@ -112,7 +119,11 @@ export const createProject = () => async (dispatch, getState) => {
       }
     }
 
-    const { data } = await axios.post(`/api/projects`, {}, config)
+    const { data } = await axios.post(
+      `https://caltekshopbackend1.herokuapp.com/api/projects`,
+      {},
+      config
+    )
     // passes an empty object as an argument because this is a post request but no data is sent
 
     dispatch({
@@ -152,7 +163,7 @@ export const updateProject = project => async (dispatch, getState) => {
     }
 
     const { data } = await axios.put(
-      `/api/projects/${project._id}`,
+      `https://caltekshopbackend1.herokuapp.com/api/projects/${project._id}`,
       project,
       config
     )

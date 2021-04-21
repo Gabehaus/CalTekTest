@@ -7,7 +7,7 @@ import Testimonial from "./Testimonial"
 
 const Testimonials = () => {
   return (
-    <div className='jumbotron'>
+    <div className='jumbotron' id='testimonials'>
       <h1
         className='servicesHeading'
         data-aos='zoom-in'

@@ -21,7 +21,7 @@ const ContactHome = () => {
     }
 
     axios
-      .post("/api/mail", data)
+      .post("https://caltekshopbackend1.herokuapp.com/api/mail", data)
       .then(res => {
         setSent(true)
         resetForm()

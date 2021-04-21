@@ -14,8 +14,14 @@ const Project = ({ hd, desc, longDesc, client, imag, note1, note2, note3 }) => {
         >
           {hd}
         </h3>
-        <div className='card-body' style={{ border: "none" }}>
-          <h5 className='card-title' style={{ whiteSpace: "pre-wrap" }}>
+        <div
+          className='card-body'
+          style={{ border: "none", minHeight: "7rem" }}
+        >
+          <h5
+            className='card-title'
+            style={{ whiteSpace: "pre-wrap", minHeight: "4rem" }}
+          >
             {desc}
           </h5>
           <h6 className='card-subtitle text-muted'>{client}</h6>
@@ -23,7 +29,7 @@ const Project = ({ hd, desc, longDesc, client, imag, note1, note2, note3 }) => {
 
         <img src={imag} style={{ maxHeight: "18vh" }}></img>
         <div className='card-body'>
-          <p className='card-text' style={{}}>
+          <p className='card-text' style={{ minHeight: "5.2rem" }}>
             {longDesc}
           </p>
         </div>

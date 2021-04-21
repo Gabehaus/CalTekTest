@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import HeaderMain from "../components/HeaderMain.js"
 import CarouselMain from "../components/CarouselMain.js"
 import CarouselMain2 from "../components/CarouselMain2.js"
@@ -7,11 +8,13 @@ import Projects from "../components/Projects.js"
 import Testimonials from "../components/Testimonials.js"
 import ShopJumbo from "../components/ShopJumbo.js"
 import ContactHome from "../components/ContactHome.js"
+import { listProjects } from "../actions/projectActions"
 import Aos from "aos"
 import "aos/dist/aos.css"
 
 const HomeMain = () => {
-  console.log("you can log to console from calteksolutions.come")
+  const dispatch = useDispatch()
+  console.log("you can log to console from calteksolutions.com")
   useEffect(() => {
     Aos.init({
       duration: 2000,
@@ -22,6 +25,10 @@ const HomeMain = () => {
     }) // initialize animate on scroll
   }, [])
 
+  useEffect(() => {
+    dispatch(listProjects())
+  }, [dispatch])
+
   return (
     <div style={{ position: "absolute", top: "0", left: "0", width: "100vw" }}>
       <HeaderMain />
@@ -30,6 +37,7 @@ const HomeMain = () => {
       <CarouselMain2 />
       <Projects />
       <Testimonials />
+      <ShopJumbo />
       <ContactHome />
       Hello World!
       <a href='/shop'>Shop</a>

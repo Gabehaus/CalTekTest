@@ -52,6 +52,10 @@ h2 {
   margin: 0 auto;
 }
 
+.carousel-header {
+  color: #2ce692 !important;
+}
+
 .jumbotron {
   background: white;
   background-repeat: no-repeat;

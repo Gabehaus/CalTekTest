@@ -68,7 +68,10 @@ const ProjectEditScreen = ({ match, history }) => {
         }
       }
 
-      const { data } = await axios.post("/api/upload", formData, config)
+      const { data } = await axios.post(
+        "https://caltekshopbackend1.herokuapp.com/api/uploadImage",
+        formData
+      )
 
       setImag(data)
       setUploading(false)
@@ -118,6 +121,7 @@ const ProjectEditScreen = ({ match, history }) => {
                 placeholder='Enter heading'
                 value={heading}
                 onChange={e => setHeading(e.target.value)}
+                maxlength='15'
               ></Form.Control>
             </Form.Group>
             <Form.Group controlId='description'>
@@ -127,6 +131,8 @@ const ProjectEditScreen = ({ match, history }) => {
                 placeholder='Enter description'
                 value={description}
                 onChange={e => setDescription(e.target.value)}
+                maxlength='40'
+                minlength='25'
               ></Form.Control>
             </Form.Group>
             <Form.Group controlId='client'>
@@ -163,6 +169,7 @@ const ProjectEditScreen = ({ match, history }) => {
                 placeholder='Enter long description'
                 value={longDesc}
                 onChange={e => setLongDesc(e.target.value)}
+                maxlength='136'
               ></Form.Control>
             </Form.Group>
 

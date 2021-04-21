@@ -25,7 +25,7 @@ const Projects = () => {
   }, [projects])
 
   return (
-    <div className='jumbotron'>
+    <div className='jumbotron' id='projects'>
       <h1
         className='servicesHeading'
         data-aos='zoom-in'
@@ -41,16 +41,11 @@ const Projects = () => {
           style={{ background: "none" }}
           className='ml-auto mr-auto'
         >
+          {}
           <Row>
-            {/*{projects.map(elem => {
+            {projects.map(elem => {
               return (
-                <Col
-                  lg={3}
-                  md={12}
-                  sm={12}
-                  className='ml-auto mr-auto'
-                  data-aos='fade-right'
-                >
+                <Col lg={3} md={12} sm={12} className='ml-auto mr-auto'>
                   <Project
                     hd={elem.hd}
                     desc={elem.desc}
@@ -63,9 +58,8 @@ const Projects = () => {
                   />
                 </Col>
               )
-            })} */}
-
-            <Col
+            })}
+            {/* <Col
               lg={3}
               md={12}
               sm={12}
@@ -118,7 +112,7 @@ const Projects = () => {
                 note2='Custom Install'
                 note3='Ongoing maintenance and upgrades'
               />
-            </Col>
+            </Col> */}
           </Row>
         </Col>
       </Row>
