@@ -11,7 +11,7 @@ const Product = ({ product }) => {
           class='card-img-top'
           src={product.image}
           variant='top'
-          style={{ minHeight: "19.5vh" }}
+          style={{ minHeight: "23vh" }}
         />
       </Link>
       <Card.Body>

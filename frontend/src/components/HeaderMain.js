@@ -19,6 +19,7 @@ const HeaderMain = () => {
             <Nav.Link href='#services'>Services</Nav.Link>
             <Nav.Link href='#projects'>Projects</Nav.Link>
             <Nav.Link href='#testimonials'>Testimonials</Nav.Link>
+            <Nav.Link href='#contact'>Contact</Nav.Link>
             <Nav.Link href='/shop'>Shop</Nav.Link>
           </Nav>
         </Navbar.Collapse>

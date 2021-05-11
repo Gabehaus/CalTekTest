@@ -21,7 +21,7 @@ const ContactHome = () => {
     }
 
     axios
-      .post("https://caltekshopbackend1.herokuapp.com/api/mail", data)
+      .post(`https://caltekshopbackend1.herokuapp.com/api/mail/`, data)
       .then(res => {
         setSent(true)
         resetForm()
@@ -55,7 +55,7 @@ const ContactHome = () => {
   }
 
   return (
-    <Row>
+    <Row id='contact'>
       <Col lg={8} md={12} className='ml-auto mr-auto mt-5'>
         <Row>
           <Col lg={12} className='mt-5'>

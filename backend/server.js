@@ -12,6 +12,7 @@ import orderRoutes from "./routes/orderRoutes.js"
 import uploadRoutes from "./routes/uploadRoutes.js"
 import uploadImageRoutes from "./routes/uploadImageRoutes.js"
 import mailRoute from "./routes/mailRoute.js"
+import autoReply from "./routes/autoReply.js"
 import projectRoutes from "./routes/projectRoutes.js"
 import cors from "cors"
 
@@ -35,6 +36,7 @@ app.use("/api/orders", orderRoutes)
 app.use("/api/upload", uploadRoutes)
 app.use("/api/uploadImage", uploadImageRoutes)
 app.use("/api/mail", mailRoute)
+app.use("/api/autoReply", autoReply)
 app.use("/api/projects", projectRoutes)
 
 app.get("/api/config/paypal", (req, res) =>

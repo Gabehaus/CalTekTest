@@ -10,8 +10,10 @@ const ShippingScreen = ({ history }) => {
   const cart = useSelector(state => state.cart)
   const { shippingAddress } = cart
 
+  const [recipient, setRecipient] = useState(shippingAddress.recipient)
   const [address, setAddress] = useState(shippingAddress.address)
   const [city, setCity] = useState(shippingAddress.city)
+  const [state, setState] = useState(shippingAddress.state)
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode)
   const [country, setCountry] = useState(shippingAddress.country)
 
@@ -19,7 +21,16 @@ const ShippingScreen = ({ history }) => {
 
   const submitHandler = e => {
     e.preventDefault()
-    dispatch(saveShippingAddress({ address, city, postalCode, country }))
+    dispatch(
+      saveShippingAddress({
+        recipient,
+        address,
+        city,
+        state,
+        postalCode,
+        country
+      })
+    )
     history.push("/payment")
   }
 
@@ -30,6 +41,16 @@ const ShippingScreen = ({ history }) => {
         <CheckoutSteps step1 step2 />
         <h1>Shipping</h1>
         <Form onSubmit={submitHandler}>
+          <Form.Group controlId='recipient'>
+            <Form.Label>Recipient</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Enter name of recipient'
+              value={recipient}
+              required
+              onChange={e => setRecipient(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
           <Form.Group controlId='address'>
             <Form.Label>Address</Form.Label>
             <Form.Control
@@ -50,6 +71,16 @@ const ShippingScreen = ({ history }) => {
               onChange={e => setCity(e.target.value)}
             ></Form.Control>
           </Form.Group>
+          <Form.Group controlId='state'>
+            <Form.Label>State</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Enter state'
+              value={state}
+              required
+              onChange={e => setState(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
           <Form.Group controlId='postalCode'>
             <Form.Label>Postal Code</Form.Label>
             <Form.Control
@@ -61,7 +92,7 @@ const ShippingScreen = ({ history }) => {
             ></Form.Control>
           </Form.Group>
           <Form.Group controlId='country'>
-            <Form.Label>country</Form.Label>
+            <Form.Label>Country</Form.Label>
             <Form.Control
               type='text'
               placeholder='Enter Country'

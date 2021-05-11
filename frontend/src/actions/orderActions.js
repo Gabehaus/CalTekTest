@@ -16,7 +16,13 @@ import {
   ORDER_LIST_REQUEST,
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_SUCCESS,
-  ORDER_DELIVER_REQUEST
+  ORDER_DELIVER_REQUEST,
+  DELIVERY_EMAIL_REQUEST,
+  DELIVERY_EMAIL_SUCCESS,
+  DELIVERY_EMAIL_FAIL,
+  SHIP_INFO_REQUEST,
+  SHIP_INFO_SUCCESS,
+  SHIP_INFO_FAIL
 } from "../constants/orderConstants"
 import { CART_CLEAR_ITEMS } from "../constants/cartConstants"
 import axios from "axios"
@@ -38,6 +44,7 @@ export const createOrder = order => async (dispatch, getState) => {
       }
     }
 
+    // `https://caltekshopbackend1.herokuapp.com/api/orders`
     const { data } = await axios.post(
       `https://caltekshopbackend1.herokuapp.com/api/orders`,
       order,
@@ -243,6 +250,102 @@ export const listOrders = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+    })
+  }
+}
+
+export const sendDeliveryEmail = deliveryDetails => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({
+      type: DELIVERY_EMAIL_REQUEST
+    })
+
+    const {
+      userLogin: { userInfo }
+    } = getState()
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`
+      }
+    }
+
+    const deliveryEmailData = {
+      orderItems: [...deliveryDetails.orderItems],
+      name: deliveryDetails.user.name,
+      address: deliveryDetails.shippingAddress,
+      email: deliveryDetails.user.email,
+      shippedOn: deliveryDetails.shippedOn,
+      shipService: deliveryDetails.shipService,
+      arrivesIn: deliveryDetails.arrivesIn,
+      trackingNumber: deliveryDetails.trackingNumber
+    }
+
+    console.log("token", userInfo.token)
+
+    console.log("deliveryEmailData: ", deliveryEmailData)
+
+    const { data } = await axios.post(
+      `https://caltekshopbackend1.herokuapp.com/api/autoReply/`,
+      deliveryEmailData,
+      config
+    )
+
+    console.log("response from auto reply: ", data)
+    // dispatch({
+    //   type: DELIVERY_EMAIL_SUCCESS,
+    //   payload: data
+    // })
+  } catch (error) {
+    dispatch({
+      type: DELIVERY_EMAIL_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+    })
+  }
+}
+
+export const addShipmentInfo = updatedOrder => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SHIP_INFO_REQUEST
+    })
+
+    const {
+      userLogin: { userInfo }
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`
+      }
+    }
+    console.log("action called with updatedOrder var value: ", updatedOrder)
+    //`http://localhost:5000/api/orders/${updatedOrder._id}/shipmentInfo`
+    const { data } = await axios.put(
+      `https://caltekshopbackend1.herokuapp.com/api/orders/${updatedOrder._id}/shipmentInfo`,
+      updatedOrder,
+      config
+    )
+
+    dispatch({
+      type: SHIP_INFO_SUCCESS,
+      payload: data
+    })
+  } catch (error) {
+    console.log("error: ", error.response.data)
+    dispatch({
+      type: SHIP_INFO_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

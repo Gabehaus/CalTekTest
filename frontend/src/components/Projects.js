@@ -10,6 +10,7 @@ import { listProjects } from "../actions/projectActions"
 
 const Projects = () => {
   // const projectsArray = projectsData.projectArray
+  const [width, setWidth] = useState(0)
   const [projectsArray, setProjectsArray] = useState([])
   const dispatch = useDispatch()
 
@@ -19,6 +20,12 @@ const Projects = () => {
   useEffect(() => {
     dispatch(listProjects())
   }, [dispatch])
+
+  //get dimensons of screen
+  useEffect(() => {
+    const { innerWidth, innerHeight } = window
+    setWidth(innerWidth)
+  })
 
   useEffect(() => {
     console.log("projects", projects)
@@ -45,7 +52,7 @@ const Projects = () => {
           <Row>
             {projects.map(elem => {
               return (
-                <Col lg={3} md={12} sm={12} className='ml-auto mr-auto'>
+                <Col xl={3} md={12} sm={12} className='ml-auto mr-auto'>
                   <Project
                     hd={elem.hd}
                     desc={elem.desc}
@@ -55,6 +62,7 @@ const Projects = () => {
                     note1={elem.note1}
                     note2={elem.note2}
                     note3={elem.note3}
+                    width={width}
                   />
                 </Col>
               )

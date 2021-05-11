@@ -20,7 +20,11 @@ import {
   ORDER_DELIVER_REQUEST,
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
-  ORDER_DELIVER_RESET
+  ORDER_DELIVER_RESET,
+  SHIP_INFO_REQUEST,
+  SHIP_INFO_SUCCESS,
+  SHIP_INFO_FAIL,
+  SHIP_INFO_RESET
 } from "../constants/orderConstants"
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -113,6 +117,29 @@ export const orderDeliverReducer = (state = {}, action) => {
         error: action.payload
       }
     case ORDER_DELIVER_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export const orderShipmentInfoReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SHIP_INFO_REQUEST:
+      return {
+        loading: true
+      }
+    case SHIP_INFO_SUCCESS:
+      return {
+        loading: false,
+        success: true
+      }
+    case SHIP_INFO_FAIL:
+      return {
+        loading: false,
+        error: action.payload
+      }
+    case SHIP_INFO_RESET:
       return {}
     default:
       return state

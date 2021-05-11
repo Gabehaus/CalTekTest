@@ -21,8 +21,10 @@ const orderSchema = mongoose.Schema(
       }
     ],
     shippingAddress: {
+      recipient: { type: String, required: true },
       address: { type: String, required: true },
       city: { type: String, required: true },
+      state: { type: String, required: true },
       postalCode: { type: String, required: true },
       country: { type: String, required: true }
     },
@@ -58,6 +60,22 @@ const orderSchema = mongoose.Schema(
     },
     paidAt: {
       type: Date
+    },
+    shippedOn: {
+      type: String,
+      required: false
+    },
+    shipService: {
+      type: String,
+      required: false
+    },
+    trackingNumber: {
+      type: String,
+      required: false
+    },
+    arrivesIn: {
+      type: String,
+      required: false
     },
     isDelivered: {
       type: Boolean,

@@ -39,8 +39,6 @@ const HomeMain = () => {
       <Testimonials />
       <ShopJumbo />
       <ContactHome />
-      Hello World!
-      <a href='/shop'>Shop</a>
     </div>
   )
 }

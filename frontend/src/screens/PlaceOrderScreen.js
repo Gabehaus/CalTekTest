@@ -50,6 +50,7 @@ const PlaceOrderScreen = ({ history }) => {
         totalPrice: cart.totalPrice
       })
     )
+    console.log("createOrder action dispatched from frontend")
   }
 
   return (
@@ -60,10 +61,17 @@ const PlaceOrderScreen = ({ history }) => {
         <Col md={8}>
           <ListGroup variant='flush'>
             <ListGroup.Item>
+              <h2>Recipient</h2>
+              <p>
+                <strong>Name: </strong> {cart.shippingAddress.recipient}
+              </p>
+            </ListGroup.Item>
+            <ListGroup.Item>
               <h2>Shipping</h2>
               <p>
                 <strong>Address: </strong> {cart.shippingAddress.address},{" "}
-                {cart.shippingAddress.city} {cart.shippingAddress.postalCode},{" "}
+                {cart.shippingAddress.city}, {cart.shippingAddress.state}{" "}
+                {cart.shippingAddress.postalCode},{" "}
                 {cart.shippingAddress.country}
               </p>
             </ListGroup.Item>

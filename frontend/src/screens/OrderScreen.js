@@ -2,14 +2,26 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { PayPalButton } from "react-paypal-button-v2"
 import { Link } from "react-router-dom"
-import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap"
+import {
+  Row,
+  Col,
+  ListGroup,
+  Image,
+  Card,
+  Button,
+  Modal,
+  InputGroup,
+  FormControl
+} from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
 import {
   getOrderDetails,
   payOrder,
-  deliverOrder
+  deliverOrder,
+  sendDeliveryEmail,
+  addShipmentInfo
 } from "../actions/orderActions"
 import {
   ORDER_PAY_RESET,
@@ -21,6 +33,13 @@ const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id
 
   const [sdkReady, setSdkReady] = useState(false)
+  // const [showSetShipped, setShowSetShipped] = useState(false)
+  const [show, setShow] = useState(false)
+  const [shipService, setShipService] = useState("")
+  const [shippedOn, setShippedOn] = useState("")
+  const [trackingNumber, setTrackingNumber] = useState("")
+  const [arrivesIn, setArrivesIn] = useState("")
+  const [updatedOrder, setUpdatedOrder] = useState("")
 
   const dispatch = useDispatch()
 
@@ -46,6 +65,19 @@ const OrderScreen = ({ match, history }) => {
       order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     )
   }
+
+  //adds new fields to order as users input data in shipment info model
+  useEffect(() => {
+    setUpdatedOrder({
+      ...order,
+      shippedOn,
+      shipService,
+      trackingNumber,
+      arrivesIn
+    })
+  }, [shipService, trackingNumber, arrivesIn, shippedOn])
+
+  useEffect(() => {}, [order])
 
   useEffect(() => {
     if (!userInfo) {
@@ -84,8 +116,26 @@ const OrderScreen = ({ match, history }) => {
     dispatch(payOrder(orderId, paymentResult))
   }
 
+  const handleClose = () => {
+    setShow(false)
+    history.push(`/order/${order._id}`)
+  }
+  const handleShow = () => setShow(true)
+
+  const shipmentInfoHandler = shipmentInfo => {
+    console.log(updatedOrder)
+    dispatch(addShipmentInfo(updatedOrder))
+    setShow(false)
+    ///window.location.reload()
+    setTimeout(() => {
+      window.location.reload()
+    }, 1000)
+  }
+
   const deliverHandler = () => {
+    console.log("order object passed to deliverHandler: ", order)
     dispatch(deliverOrder(order))
+    dispatch(sendDeliveryEmail(order))
   }
 
   return loading ? (
@@ -109,10 +159,13 @@ const OrderScreen = ({ match, history }) => {
                 <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
               </p>
               <p>
+                <strong>Recipient: </strong> {order.shippingAddress.recipient}
+              </p>
+              <p>
                 <strong>Address:</strong>
-                {order.shippingAddress.address}, {order.shippingAddress.city}{" "}
-                {order.shippingAddress.postalCode},{" "}
-                {order.shippingAddress.country}
+                {order.shippingAddress.address}, {order.shippingAddress.city},{" "}
+                {order.shippingAddress.state} {order.shippingAddress.postalCode}
+                , {order.shippingAddress.country}
               </p>
               {order.isDelivered ? (
                 <Message variant='success'>
@@ -167,6 +220,27 @@ const OrderScreen = ({ match, history }) => {
                 </ListGroup>
               )}
             </ListGroup.Item>
+            {order.shipService && (
+              <ListGroup.Item>
+                <h2>Shipment Info</h2>
+                <p>
+                  <strong>Shipped On: </strong>
+                  {order.shippedOn}
+                </p>
+                <p>
+                  <strong>Shipping Service: </strong>
+                  {order.shipService}
+                </p>
+                <p>
+                  <strong>Tracking Number: </strong>
+                  {order.trackingNumber}
+                </p>
+                <p>
+                  <strong>Arrives In: </strong>
+                  {order.arrivesIn}
+                </p>
+              </ListGroup.Item>
+            )}
           </ListGroup>
         </Col>
         <Col md={4}>
@@ -212,11 +286,43 @@ const OrderScreen = ({ match, history }) => {
                   )}
                 </ListGroup.Item>
               )}
+
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered &&
+                !order.shipService && (
+                  <ListGroup.Item>
+                    <Button
+                      type='button'
+                      className='btn btn-block'
+                      onClick={handleShow}
+                    >
+                      Enter Shipment Info
+                    </Button>
+                  </ListGroup.Item>
+                )}
+
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                order.shipService && (
+                  <ListGroup.Item>
+                    <Button
+                      type='button'
+                      className='btn btn-block'
+                      onClick={handleShow}
+                    >
+                      Edit Shipment Info
+                    </Button>
+                  </ListGroup.Item>
+                )}
               {loadingDeliver && <Loader />}
               {userInfo &&
                 userInfo.isAdmin &&
                 order.isPaid &&
-                !order.isDelivered && (
+                !order.isDelivered &&
+                order.shipService && (
                   <ListGroup.Item>
                     <Button
                       type='button'
@@ -229,6 +335,57 @@ const OrderScreen = ({ match, history }) => {
                 )}
             </ListGroup>
           </Card>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Shipment Info</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <label htmlFor='basic-url'>Shipping Service</label>
+              <InputGroup className='mb-3'>
+                <FormControl
+                  id='basic-url'
+                  aria-describedby='basic-addon3'
+                  onChange={e => setShipService(e.target.value)}
+                  placeholder='Enter shipping service here'
+                />
+              </InputGroup>
+              <label htmlFor='basic-url'>Tracking Number</label>
+              <InputGroup className='mb-3'>
+                <FormControl
+                  id='basic-url'
+                  aria-describedby='basic-addon3'
+                  onChange={e => setTrackingNumber(e.target.value)}
+                  placeholder='Enter tracking number here'
+                />
+              </InputGroup>
+              <label htmlFor='basic-url'>Arrives In</label>
+              <InputGroup className='mb-3'>
+                <FormControl
+                  id='basic-url'
+                  aria-describedby='basic-addon3'
+                  onChange={e => setArrivesIn(e.target.value)}
+                  placeholder='Enter time period until arrival'
+                />
+              </InputGroup>
+              <label htmlFor='basic-url'>Shipped On</label>
+              <InputGroup className='mb-3'>
+                <FormControl
+                  id='basic-url'
+                  aria-describedby='basic-addon3'
+                  onChange={e => setShippedOn(e.target.value)}
+                  placeholder='Enter shipping date'
+                />
+              </InputGroup>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant='secondary' onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant='primary' onClick={shipmentInfoHandler}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </Col>
       </Row>
     </>

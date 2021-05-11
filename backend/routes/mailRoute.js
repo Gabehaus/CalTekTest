@@ -9,8 +9,14 @@ router.post("/", (req, res) => {
     service: "Gmail",
     port: 465,
     auth: {
+      type: "OAuth2",
       user: "caltekmail2021@gmail.com",
-      pass: "45654513aB$%^"
+      pass: "45654513aB$%^",
+      clientId:
+        "708032881609-p0hqrgdittll65cjr1fectrflah01iiu.apps.googleusercontent.com",
+      clientSecret: "GI9EAXRfKV7KdlK_Lfu4v6kl",
+      refreshToken:
+        "1//04ONSvfVGOJOeCgYIARAAGAQSNwF-L9IrLqRHOMp3WqZA36BLeX7TvMYaY6WhUhylTfpZtMegZ04h8v0EyegxR5YeBq5h-RgmueE"
     }
   })
 
@@ -33,8 +39,10 @@ router.post("/", (req, res) => {
   smtpTransport.sendMail(mailOptions, (error, response) => {
     if (error) {
       res.send(error)
+      console.log("error: ", error)
     } else {
       res.send("Success")
+      console.log("success")
     }
 
     smtpTransport.close()

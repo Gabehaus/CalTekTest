@@ -1,7 +1,20 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Card } from "react-bootstrap"
 
-const Project = ({ hd, desc, longDesc, client, imag, note1, note2, note3 }) => {
+const Project = ({
+  hd,
+  desc,
+  longDesc,
+  client,
+  imag,
+  note1,
+  note2,
+  note3,
+  width
+}) => {
+  useEffect(() => {
+    console.log("bebo", width)
+  })
   return (
     <div
       className='mt-5'
@@ -27,7 +40,7 @@ const Project = ({ hd, desc, longDesc, client, imag, note1, note2, note3 }) => {
           <h6 className='card-subtitle text-muted'>{client}</h6>
         </div>
 
-        <img src={imag} style={{ maxHeight: "18vh" }}></img>
+        <img src={imag} style={{ maxHeight: "28vh", minHeight: "28vh" }}></img>
         <div className='card-body'>
           <p className='card-text' style={{ minHeight: "5.2rem" }}>
             {longDesc}
